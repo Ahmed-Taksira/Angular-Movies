@@ -9,7 +9,7 @@
 <div class="pagination">
   <div class="row">
     <button (click)="newPage(-1)" *ngIf="page !== 1">Prev</button> |
-    <button (click)="newPage(+1)">Next</button>
+    <button (click)="newPage(+1)" *ngIf="page < totalPages">Next</button>
   </div>
   <span> Page: {{ page }}</span>
 </div>

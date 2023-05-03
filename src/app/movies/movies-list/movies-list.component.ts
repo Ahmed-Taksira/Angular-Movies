@@ -18,14 +18,16 @@ export class MoviesListComponent implements OnInit {
   movies: Movie[] = [];
   query: string = '';
   page!: number;
+  totalPages!: number;
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
       let tempParam = params['page'];
       if (tempParam == undefined) this.page = 1;
       else this.page = Number(tempParam);
-      this.movieService.fetchMovies(this.page).subscribe((movies) => {
-        this.movies = movies;
+      this.movieService.fetchMovies(this.page).subscribe((res) => {
+        this.movies = res.movies;
+        this.totalPages = res.totalPages;
       });
     });
   }

@@ -10,7 +10,7 @@ const routes: Routes = [
   { path: '', component: MoviesComponent, pathMatch: 'full' },
   { path: ':page', component: MoviesComponent, pathMatch: 'full' },
   { path: 'movies/:id', component: MovieDetailsComponent },
-  { path: 'search/:query', component: SearchMoviesComponent },
+  { path: 'search/:query/:page', component: SearchMoviesComponent },
   { path: 'error/message', component: NotFoundComponent },
   { path: '**', redirectTo: 'error/message' },
 ];
