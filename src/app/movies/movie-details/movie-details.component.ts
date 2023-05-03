@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MovieService } from '../movie.service';
 import { Movie } from '../movie.model';
 import { ActivatedRoute, Router } from '@angular/router';
-import * as XLSX from 'xlsx';
+import * as ExcelJS from 'exceljs';
 import * as fileSaver from 'file-saver';
 
 @Component({
@@ -25,29 +25,27 @@ export class MovieDetailsComponent implements OnInit {
   }
 
   downloadExcel() {
-    const data = [
-      {
-        Title: this.movie.title,
-        Rating: this.movie.rating,
-        Overview: this.movie.overview,
-        Votes_Count: this.movie.releaseDate,
-        Release_Date: this.movie.releaseDate,
-      },
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet('Movies');
+    worksheet.columns = [
+      { header: 'Title', key: 'title' },
+      { header: 'Rating', key: 'rating' },
+      { header: 'Overview', key: 'overview' },
+      { header: 'Votes', key: 'votes' },
+      { header: 'Release Date', key: 'release_date' },
     ];
 
-    const worksheet = XLSX.utils.json_to_sheet(data);
-    const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
-    const excelBuffer = XLSX.write(workbook, {
-      bookType: 'xlsx',
-      type: 'array',
+    worksheet.addRow({
+      title: this.movie.title,
+      rating: this.movie.rating,
+      overview: this.movie.overview,
+      votes: this.movie.votesCount,
+      release_date: this.movie.releaseDate,
     });
 
-    const blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
-
-    if ((window.navigator as any).msSaveOrOpenBlob) {
-      (window.navigator as any).msSaveOrOpenBlob(blob, 'movies.xlsx');
-    } else {
-      fileSaver.saveAs(blob, 'movies.xlsx');
-    }
+    workbook.xlsx.writeBuffer().then((buffer) => {
+      const blob = new Blob([buffer], { type: 'application/octet-stream' });
+      fileSaver.saveAs(blob, `${this.movie.title}.xlsx`);
+    });
   }
 }
