@@ -1,0 +1,13 @@
+<a class="btn" (click)="chooseMovie()">
+  <div class="card">
+    <img
+      class="card-img-top rounded-top"
+      [src]="movie.imagePath"
+      alt="Movie poster"
+    />
+    <div class="card-body">
+      <h2 class="card-title">{{ movie.title }}</h2>
+      <span class="card-text">{{ movie.releaseDate }}</span>
+    </div>
+  </div>
+</a>

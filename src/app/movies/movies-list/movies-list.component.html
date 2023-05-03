@@ -1,0 +1,15 @@
+<div>
+  <div class="movie-container">
+    <div *ngFor="let m of movies">
+      <app-moviecard [movie]="m"></app-moviecard>
+    </div>
+  </div>
+</div>
+<hr />
+<div class="pagination">
+  <div class="row">
+    <button (click)="newPage(-1)" *ngIf="page !== 1">Prev</button> |
+    <button (click)="newPage(+1)">Next</button>
+  </div>
+  <span> Page: {{ page }}</span>
+</div>

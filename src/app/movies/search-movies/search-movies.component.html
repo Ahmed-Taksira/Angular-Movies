@@ -1,0 +1,11 @@
+<div *ngIf="filteredMovies.length !== 0">
+  <div class="movie-container">
+    <div *ngFor="let m of filteredMovies">
+      <app-moviecard [movie]="m"></app-moviecard>
+    </div>
+  </div>
+</div>
+
+<div class="centered" *ngIf="filteredMovies.length === 0">
+  No Movies found...
+</div>
